@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task" 
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:util="http://www.springframework.org/schema/util"
+	 xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+  		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd     
+        http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd
+   		http://www.springframework.org/schema/websocket
+		http://www.springframework.org/schema/websocket/spring-websocket.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd" >
+    <context:annotation-config/>   
+    <context:component-scan base-package="shopping"></context:component-scan>
+	<!-- jsp 처리 viewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+		<!-- jsp 호출시 공통 접두어 형태.. -->
+		<property name="prefix" value="WEB-INF/view/" />
+		<!-- jsp 호출시 공통 접미어 -->
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+			
+	</bean>	 
+	<!-- bean에 대한 viewresolver 처리.. -->
+	<bean id="bnViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="0"
+	/>
+	<!--파일업로드 viewResolver 처리 -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>	
+	<!-- jsonviewResolver 설정  자바Object - json으로 변경-->
+	<bean id="pageJsonReport" 
+	class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" 
+		p:contentType="text/html;charset=utf-8" />
+	<context:property-placeholder location="classpath:/resource/info.properties"/>
+	<!-- DB 연결 lib추가 후 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close" 
+	
+		p:driverClassName="${db.driver}"
+		p:url="${db.url}"
+		p:username="${db.user}"	
+		p:password="${db.password}" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" 
+		p:dataSource-ref="dataSource"
+		p:configLocation="classpath:/resource/mybatis/mybatis.Spring.xml"
+	/>    
+	<!-- 
+	springweb.b01_mvc.a03_repository : 해당 package은 인터페이스가 있는 패키지로,
+	mybatis모듈에서 실제클래스를 생성해주기때문에, 해당 위치만 설정해 준다.
+	 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		p:basePackage="shopping.dao" /> 
+
+</beans>       
+
+
+
+

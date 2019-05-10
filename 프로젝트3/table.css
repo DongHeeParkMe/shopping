@@ -1,0 +1,25 @@
+.mono_table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: none;
+    color: #000;
+}
+
+.mono_table th {
+    padding: 15px;
+    background: url(http://nanati.me/img/monoptn.gif);
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    text-shadow: 0 1px #FFF;
+}
+ 
+.mono_table td {
+    padding: 15px;
+    border: none;
+    border-bottom: 1px solid #000;
+    text-align: left;
+    vertical-align: baseline;
+}
