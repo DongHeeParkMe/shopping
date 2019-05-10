@@ -1,6 +1,0 @@
-http://192.168.0.36:7080/index.jsp
-http://192.168.0.68:7080/webprj/p3/Main3.jsp
-
-
-
-		

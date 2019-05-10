@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="shopping.dao.Shoppingdao">
+	<resultMap type="member" id="memberMap"/>
+	<select id="login" parameterType="member" resultType="member">
+		<!-- 로그인 -->
+		select * from member
+		where email = #{email} and pass = #{pass}
+	</select>
+	<select id="chkid" parameterType="member" resultType="member">
+		<!-- 아이디 중복 체크 -->
+		select * from member where 1=1 and id = #{email}
+	</select>
+	<insert id="join" parameterType="member">
+		insert into member values(
+			mem_seq.nextval, #{email}, #{pass}, #{name}, #{tel}, #{address}
+		)
+	</insert>
+</mapper> 
